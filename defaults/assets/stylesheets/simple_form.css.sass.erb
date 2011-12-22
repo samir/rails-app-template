@@ -1,0 +1,81 @@
+.simple_form
+  overflow: hidden
+  padding: 0 5px
+  fieldset
+    width: 100%
+    legend
+      width: 100%
+    &:after, legend:after
+      clear: both
+      content: "."
+      display: block
+      height: 0
+      visibility: hidden
+  .inputs
+    .input
+      clear: both
+      label
+        display: block
+      input
+        &.email, &.string, &.password, &.autocomplete
+          margin: 0
+          font-size: 15px
+          padding: 5px
+    textarea
+      margin: 0
+      font-size: 15px
+      padding: 5px
+    .input
+      select
+        padding: 5px
+        font-size: 15px
+      input.boolean
+        float: left
+        margin: 5px 8px 5px 0
+      label.boolean
+        line-height: 23px
+        font-size: 80%
+    .field_with_errors input
+      &.email, &.string, &.password
+        border-color: #ee7171
+    .error, .hint
+      display: block
+      margin: 5px 0 8px
+      color: #999
+      font-size: 75%
+  .actions
+    float: left
+    margin: 20px 0 10px
+
+.ie .simple_form fieldset
+  display: block
+  zoom: 1
+  legend
+    display: block
+    zoom: 1
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Errors SimpleForm
+#error_explanation, .error_messages
+  margin: 10px auto
+  border: 1px solid #c00
+  background-color: #fee
+  width: 500px
+  h2
+    font-weight: bold
+    text-indent: 15px
+    font-size: 16px
+    background-color: #f99
+    color: #600
+    padding: 0px
+    border-bottom: 0
+  p
+    color: #333
+    margin: 10px
+  ul
+    margin: 10px
+    li
+      color: #666
+      font-size: 12px
+      list-style: decimal
+      list-style-position: inside

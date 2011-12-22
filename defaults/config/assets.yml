@@ -1,0 +1,19 @@
+javascripts:
+  base:
+    - jquery
+    - rails
+    - jquery-ui
+    # - jquery.ui.datepicker-pt-BR
+    # - jquery.validate
+    # - jquery.maskedinput
+    # - autocomplete-rails
+    - dispatcher
+    - i18n
+    - translations
+    - application
+stylesheets:
+  base:
+    - fonts
+    - jquery-ui
+    - simple_form
+    - application

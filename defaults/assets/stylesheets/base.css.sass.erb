@@ -1,0 +1,58 @@
+@import "bourbon"
+
+html, body
+  background-color: #F5F5F5
+
+.fixed
+  position: fixed
+
+a, a:focus
+  color: #900
+  outline: 0 none
+
+body
+  padding-top: 60px
+
+small
+  color: #999
+  font-size: 80%
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Classes
+
+.highlight
+  font-weight: normal
+  background: #ffc
+  color: #000
+
+.breadcrumb
+  @include linear-gradient(#eee 0, #fff 40%, #fff 60%, #eee 100%)
+
+.error_messages
+  margin: 0 150px 30px
+
+.no_results
+  height: 200px
+  line-height: 200px
+  text-align: center
+  color: #999
+  font-size: 30px
+  text-shadow: 1px 1px 1px #aaa
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Twitter Bootstrap Topbar
+.topbar p
+  color: #666
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Twitter Bootstrap Popovers
+.popover
+  .content
+    padding: 10px
+    margin: 0
+  .title
+    background-color: #f5f5f5
+    font-size: 15px
+    padding: 8px
+  .inner
+    width: 230px

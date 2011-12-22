@@ -1,0 +1,29 @@
+@font-face
+  font-family: '%%FONT_NAME%%'
+  src: url('/assets/fonts/%%FONT_FILENAME%%.eot')
+  src: local("☺"), url('/assets/fonts/%%FONT_FILENAME%%.woff') format("woff"), url('/assets/fonts/%%FONT_FILENAME%%.ttf') format("truetype"), url('/assets/fonts/%%FONT_FILENAME%%.svg') format("svg")
+  font-weight: normal
+  font-style: normal
+
+.icon
+  padding-top: 0
+  line-height: inherit
+  &:before
+    font-family: '%%FONT_NAME%%'
+    margin-right: 5px
+    content: attr(data-icon)
+
+.icon:hover
+  text-decoration: none
+
+.icon-replace
+  text-indent: -9999px
+  overflow: hidden
+  display: inline-block
+  position: relative
+  min-width: 1em
+  &:before
+    position: absolute
+    left: 0
+    top: 0
+    text-indent: 0
