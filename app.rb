@@ -88,10 +88,9 @@ get "#{RAW_REPO_URL}/defaults/assets/javascripts/jquery.ui.datepicker-pt-BR.js",
 get "#{RAW_REPO_URL}/defaults/assets/javascripts/selectivizr-min.js",            "vendor/assets/javascripts/selectivizr-min.js"
 get "#{RAW_REPO_URL}/defaults/assets/javascripts/selectivizr.js",                "vendor/assets/javascripts/selectivizr.js"
 
-
-get "#{RAW_REPO_URL}/defaults/assets/stylesheets/application.css.sass.erb",      "app/assets/stylesheets/application.css"
-get "#{RAW_REPO_URL}/defaults/assets/stylesheets/fonts.css.sass.erb",            "app/assets/stylesheets/fonts.css"
-get "#{RAW_REPO_URL}/defaults/assets/stylesheets/simple_form.css.sass.erb",      "app/assets/stylesheets/simple_form.css"
+get "#{RAW_REPO_URL}/defaults/assets/stylesheets/application.css.sass.erb",      "app/assets/stylesheets/application.css.sass.erb"
+get "#{RAW_REPO_URL}/defaults/assets/stylesheets/fonts.css.sass.erb",            "app/assets/stylesheets/fonts.css.sass.erb"
+get "#{RAW_REPO_URL}/defaults/assets/stylesheets/simple_form.css.sass.erb",      "app/assets/stylesheets/simple_form.css.sass.erb"
 
 
 activerecord_rescue = <<-ACTIVERECORD
@@ -99,7 +98,6 @@ activerecord_rescue = <<-ACTIVERECORD
     render :file => "\#{Rails.root}/public/404.html", :layout => false, :status => 404
   end
 ACTIVERECORD
-end
 
 gsub_file "app/controllers/application_controller.rb", "protect_from_forgery", <<-APPLICATION_CONTROLLER
 protect_from_forgery
@@ -108,7 +106,7 @@ APPLICATION_CONTROLLER
 
 # Initializers
 get "#{RAW_REPO_URL}/defaults/initializers/haml.rb",        "config/initializers/haml.rb"
-get "#{RAW_REPO_URL}/defaults/initializers/simple_form.rb", "config/initializers/simple_form.rb"
+# get "#{RAW_REPO_URL}/defaults/initializers/simple_form.rb", "config/initializers/simple_form.rb"
 
 remove_file "app/views/layouts/application.html.erb"
 get "#{RAW_REPO_URL}/defaults/layouts/application.html.haml", "app/views/layouts/application.html.haml"

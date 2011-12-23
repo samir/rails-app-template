@@ -4,10 +4,8 @@ log/*.log
 tmp/
 .sass-cache/
 .DS_Store
-config/*.sphinx.conf
 config/schema.db
 config/database.yml
-db/sphinx
 db/schema.rb
 coverage
 solr
@@ -17,9 +15,11 @@ tags
 *.swp
 *.swo
 rerun.txt
+restart.txt
 specifications
 cache
 gems
 test
 *~
 Thumbs.db
+.Vagrantfile
