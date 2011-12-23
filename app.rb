@@ -35,6 +35,8 @@ gem "guard-spork",          :group => :test
 gem "shoulda-matchers",     :group => :test
 gem "simplecov",            :group => :test
 
+gem "haml-rails",           :group => :development
+
 gem "guard-rspec",          :group => [:development, :test]
 gem "jasmine", "1.1.0",     :group => [:development, :test]
 gem "rspec-rails",          :group => [:development, :test]
@@ -106,7 +108,6 @@ APPLICATION_CONTROLLER
 
 # Initializers
 get "#{RAW_REPO_URL}/defaults/initializers/haml.rb",        "config/initializers/haml.rb"
-# get "#{RAW_REPO_URL}/defaults/initializers/simple_form.rb", "config/initializers/simple_form.rb"
 
 remove_file "app/views/layouts/application.html.erb"
 get "#{RAW_REPO_URL}/defaults/layouts/application.html.haml", "app/views/layouts/application.html.haml"
@@ -117,14 +118,20 @@ get "#{RAW_REPO_URL}/defaults/gitignore", ".gitignore"
 
 run "bundle install"
 
+# Generators
+
+# SimpleForm
 generate "simple_form:install"
+remove_file "config/initializers/simple_form.rb"
+get "#{RAW_REPO_URL}/defaults/initializers/simple_form.rb", "config/initializers/simple_form.rb"
+
 generate "rspec:install"
 generate "kaminari:config"
 generate "kaminari:views default -e haml"
 if use_devise
   generate "devise:install"
   generate "devise #{model_name.camelize}"
-  generate "devise:views #{model_name.camelize} -e erb"
+  generate "devise:views -e erb"
   run "for i in `find app/views/devise -name '*.erb'` ; do html2haml -e $i ${i%erb}haml ; rm $i ; done"
 end
 run "rake i18n:js:setup"
