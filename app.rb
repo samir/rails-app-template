@@ -1,4 +1,10 @@
-RAW_REPO_URL = "https://raw.github.com/samir/rails-app-template/master"
+use_edge_files = false
+use_edge_files = true if yes?("Would you want to get remote files by last commit?")
+if use_edge_files
+  RAW_REPO_URL = "https://raw.github.com/samir/rails-app-template/master"
+else
+  RAW_REPO_URL = '/Users/samirbraga/Sites/github/rails-app-template'
+end
 
 run "rm -rf test"
 remove_file "README"
@@ -6,6 +12,7 @@ remove_file "public/index.html"
 remove_file "public/robots.txt"
 remove_file "app/assets/images/rails.png"
 remove_file "app/views/layouts/*"
+remove_file "app/assets/stylesheets/application.css"
 
 use_devise = false
 use_devise = true if yes?("Would you want to use Devise? (yes or no)")
@@ -63,26 +70,51 @@ GENERATORS
 application generators
 application "  config.assets.compress = true"
 
-get "https://raw.github.com/svenfuchs/rails-i18n/master/rails/locale/en-US.yml", "config/locales/default.en.yml"
-get "https://raw.github.com/svenfuchs/rails-i18n/master/rails/locale/pt-BR.yml", "config/locales/default.pt-BR.yml"
+
+if use_edge_files
+  get "https://raw.github.com/svenfuchs/rails-i18n/master/rails/locale/en-US.yml", "config/locales/default.en.yml"
+  get "https://raw.github.com/svenfuchs/rails-i18n/master/rails/locale/pt-BR.yml", "config/locales/default.pt-BR.yml"
+else
+  get "#{RAW_REPO_URL}/defaults/config/locales/default.en.yml",    "config/locales/default.en.yml"
+  get "#{RAW_REPO_URL}/defaults/config/locales/default.pt-BR.yml", "config/locales/default.pt-BR.yml"
+end
 
 run "mkdir -p vendor/assets/javascripts"
 
-get "https://raw.github.com/jzaefferer/jquery-validation/master/jquery.validate.js", "vendor/assets/javascripts/jquery.validate.js"
-get "https://github.com/fnando/dispatcher-js/raw/master/dispatcher.js",              "vendor/assets/javascripts/dispatcher.js"
+
+if use_edge_files
+  get "https://raw.github.com/jzaefferer/jquery-validation/master/jquery.validate.js", "vendor/assets/javascripts/jquery.validate.js"
+  get "https://github.com/fnando/dispatcher-js/raw/master/dispatcher.js",              "vendor/assets/javascripts/dispatcher.js"
+else
+  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/jquery.validate.js",        "vendor/assets/javascripts/jquery.validate.js"
+  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/dispatcher.js",             "vendor/assets/javascripts/dispatcher.js"
+end
 
 # Twitter Bootstrap
-get "https://raw.github.com/twitter/bootstrap/master/bootstrap.css",             "vendor/assets/stylesheets/bootstrap.css"
-get "https://raw.github.com/twitter/bootstrap/master/bootstrap.min.css",         "vendor/assets/stylesheets/bootstrap.min.css"
+if use_edge_files
+  get "https://raw.github.com/twitter/bootstrap/master/bootstrap.css",             "vendor/assets/stylesheets/bootstrap.css"
+  get "https://raw.github.com/twitter/bootstrap/master/bootstrap.min.css",         "vendor/assets/stylesheets/bootstrap.min.css"
+  get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-alerts.js",    "vendor/assets/javascripts/bootstrap-alerts.js"
+  get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-buttons.js",   "vendor/assets/javascripts/bootstrap-buttons.js"
+  get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-dropdown.js",  "vendor/assets/javascripts/bootstrap-dropdown.js"
+  get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-modal.js",     "vendor/assets/javascripts/bootstrap-modal.js"
+  get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-popover.js",   "vendor/assets/javascripts/bootstrap-popover.js"
+  get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-scrollspy.js", "vendor/assets/javascripts/bootstrap-scrollspy.js"
+  get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-tabs.js",      "vendor/assets/javascripts/bootstrap-tabs.js"
+  get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-twipsy.js",    "vendor/assets/javascripts/bootstrap-twipsy.js"
+else
+  get "#{RAW_REPO_URL}/defaults/vendors/assets/stylesheets/bootstrap.css",          "vendor/assets/stylesheets/bootstrap.css"
+  get "#{RAW_REPO_URL}/defaults/vendors/assets/stylesheets/bootstrap.min.css",      "vendor/assets/stylesheets/bootstrap.min.css"
+  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/bootstrap-alerts.js",    "vendor/assets/javascripts/bootstrap-alerts.js"
+  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/bootstrap-buttons.js",   "vendor/assets/javascripts/bootstrap-buttons.js"
+  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/bootstrap-dropdown.js",  "vendor/assets/javascripts/bootstrap-dropdown.js"
+  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/bootstrap-modal.js",     "vendor/assets/javascripts/bootstrap-modal.js"
+  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/bootstrap-popover.js",   "vendor/assets/javascripts/bootstrap-popover.js"
+  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/bootstrap-scrollspy.js", "vendor/assets/javascripts/bootstrap-scrollspy.js"
+  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/bootstrap-tabs.js",      "vendor/assets/javascripts/bootstrap-tabs.js"
+  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/bootstrap-twipsy.js",    "vendor/assets/javascripts/bootstrap-twipsy.js"
+end
 
-get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-alerts.js",    "vendor/assets/javascripts/bootstrap-alerts.js"
-get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-buttons.js",   "vendor/assets/javascripts/bootstrap-buttons.js"
-get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-dropdown.js",  "vendor/assets/javascripts/bootstrap-dropdown.js"
-get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-modal.js",     "vendor/assets/javascripts/bootstrap-modal.js"
-get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-popover.js",   "vendor/assets/javascripts/bootstrap-popover.js"
-get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-scrollspy.js", "vendor/assets/javascripts/bootstrap-scrollspy.js"
-get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-tabs.js",      "vendor/assets/javascripts/bootstrap-tabs.js"
-get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-twipsy.js",    "vendor/assets/javascripts/bootstrap-twipsy.js"
 
 get "#{RAW_REPO_URL}/defaults/assets/javascripts/jquery.maskedinput.js",         "vendor/assets/javascripts/jquery.maskedinput.js"
 get "#{RAW_REPO_URL}/defaults/assets/javascripts/jquery.maskedinput.min.js",     "vendor/assets/javascripts/jquery.maskedinput.min.js"
@@ -91,9 +123,9 @@ get "#{RAW_REPO_URL}/defaults/assets/javascripts/selectivizr-min.js",           
 get "#{RAW_REPO_URL}/defaults/assets/javascripts/selectivizr.js",                "vendor/assets/javascripts/selectivizr.js"
 
 get "#{RAW_REPO_URL}/defaults/assets/stylesheets/application.css.sass.erb",      "app/assets/stylesheets/application.css.sass.erb"
-get "#{RAW_REPO_URL}/defaults/assets/stylesheets/fonts.css.sass.erb",            "app/assets/stylesheets/fonts.css.sass.erb"
+get "#{RAW_REPO_URL}/defaults/assets/stylesheets/base.css.sass.erb",             "app/assets/stylesheets/base.css.sass.erb"
+get "#{RAW_REPO_URL}/defaults/assets/stylesheets/icons.css.sass.erb",            "app/assets/stylesheets/icons.css.sass.erb"
 get "#{RAW_REPO_URL}/defaults/assets/stylesheets/simple_form.css.sass.erb",      "app/assets/stylesheets/simple_form.css.sass.erb"
-
 
 activerecord_rescue = <<-ACTIVERECORD
   rescue_from "ActiveRecord::RecordNotFound" do |e|
