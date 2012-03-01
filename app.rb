@@ -1,5 +1,6 @@
 use_edge_files = false
-use_edge_files = true if yes?("Would you want to get remote files by last commit?")
+use_edge_files = true if yes?("Would you want to use edge version of assets files?")
+
 if use_edge_files
  RAW_REPO_URL = "https://raw.github.com/samir/rails-app-template/master"
 else
@@ -22,16 +23,26 @@ if use_devise
   model_name = "User" if model_name.strip.blank?
 end
 
-gem "carrierwave"
-gem "dalli"
 gem "haml"
+
+install_image_gems = false
+install_image_gems = true if yes?("Would you want to install gems for image manipulation? (yes or no)")
+
+if install_image_gems
+  gem "carrierwave"
+  gem "mini_magick"
+end
+
+gem "dalli"
 gem "kaminari"
-gem "mini_magick"
 gem "permalink"
 gem "simple_form"
-gem "swiss_knife"
+# gem "swiss_knife"
 gem "bourbon"
 gem "responders"
+
+gem 'twitter-bootstrap-rails', :group => :assets
+
 gem "devise" if use_devise
 
 gem "capybara",             :group => :test
@@ -89,44 +100,6 @@ if use_edge_files
   get "https://github.com/fnando/dispatcher-js/raw/master/dispatcher.js",              "vendor/assets/javascripts/dispatcher.js"
 end
 
-# Twitter Bootstrap
-if use_edge_files
-  get "https://raw.github.com/twitter/bootstrap/master/bootstrap.css",             "vendor/assets/stylesheets/bootstrap.css"
-  get "https://raw.github.com/twitter/bootstrap/master/bootstrap.min.css",         "vendor/assets/stylesheets/bootstrap.min.css"
-  get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-alerts.js",    "vendor/assets/javascripts/bootstrap-alerts.js"
-  get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-buttons.js",   "vendor/assets/javascripts/bootstrap-buttons.js"
-  get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-dropdown.js",  "vendor/assets/javascripts/bootstrap-dropdown.js"
-  get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-modal.js",     "vendor/assets/javascripts/bootstrap-modal.js"
-  get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-popover.js",   "vendor/assets/javascripts/bootstrap-popover.js"
-  get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-scrollspy.js", "vendor/assets/javascripts/bootstrap-scrollspy.js"
-  get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-tabs.js",      "vendor/assets/javascripts/bootstrap-tabs.js"
-  get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-twipsy.js",    "vendor/assets/javascripts/bootstrap-twipsy.js"
-end
-
-# get "#{RAW_REPO_URL}/defaults/assets/javascripts/plugin/mutiselect/ui.multiselect.js",       "vendor/assets/javascripts/plugin/mutiselect/ui.multiselect.js"
-# get "#{RAW_REPO_URL}/defaults/assets/javascripts/plugin/mutiselect/ui.multiselect-pt-BR.js", "vendor/assets/javascripts/plugin/mutiselect/ui.multiselect-pt-BR.js"
-#
-# get "#{RAW_REPO_URL}/defaults/assets/javascripts/plugin/maskedinput/jquery.maskedinput.js",     "vendor/assets/javascripts/plugin/maskedinput/jquery.maskedinput.js"
-# get "#{RAW_REPO_URL}/defaults/assets/javascripts/plugin/maskedinput/jquery.maskedinput.min.js", "vendor/assets/javascripts/plugin/maskedinput/jquery.maskedinput.min.js"
-#
-# get "#{RAW_REPO_URL}/defaults/assets/javascripts/jquery.ui.js",                  "vendor/assets/javascripts/jquery.ui.js"
-# get "#{RAW_REPO_URL}/defaults/assets/javascripts/jquery.ui.datepicker-pt-BR.js", "vendor/assets/javascripts/jquery.ui.datepicker-pt-BR.js"
-#
-# # http://trentrichardson.com/examples/timepicker/
-# get "#{RAW_REPO_URL}/defaults/assets/javascripts/jquery.ui.timepicker-addon.js", "vendor/assets/javascripts/jquery.ui.timepicker-addon.js"
-# get "#{RAW_REPO_URL}/defaults/assets/javascripts/jquery.ui.timepicker-pt-BR.js", "vendor/assets/javascripts/jquery.ui.timepicker-pt-BR.js"
-#
-# get "#{RAW_REPO_URL}/defaults/assets/javascripts/selectivizr-min.js",            "vendor/assets/javascripts/selectivizr-min.js"
-# get "#{RAW_REPO_URL}/defaults/assets/javascripts/selectivizr.js",                "vendor/assets/javascripts/selectivizr.js"
-#
-# get "#{RAW_REPO_URL}/defaults/vendors/assets/stylesheets/ui/timepicker.css",     "vendor/assets/stylesheets/ui/timepicker.css"
-# get "#{RAW_REPO_URL}/defaults/vendors/assets/stylesheets/ui/multiselect.css",     "vendor/assets/stylesheets/ui/multiselect.css"
-#
-# get "#{RAW_REPO_URL}/defaults/assets/stylesheets/application.css.sass.erb",      "app/assets/stylesheets/application.css.sass.erb"
-# get "#{RAW_REPO_URL}/defaults/assets/stylesheets/base.css.sass.erb",             "app/assets/stylesheets/base.css.sass.erb"
-# get "#{RAW_REPO_URL}/defaults/assets/stylesheets/icons.css.sass.erb",            "app/assets/stylesheets/icons.css.sass.erb"
-# get "#{RAW_REPO_URL}/defaults/assets/stylesheets/simple_form.css.sass.erb",      "app/assets/stylesheets/simple_form.css.sass.erb"
-
 activerecord_rescue = <<-ACTIVERECORD
   rescue_from "ActiveRecord::RecordNotFound" do |e|
     render :file => "\#{Rails.root}/public/404.html", :layout => false, :status => 404
@@ -157,9 +130,10 @@ run "bundle install"
 # Generators
 
 # SimpleForm
-generate "simple_form:install"
-remove_file "config/initializers/simple_form.rb"
-get "#{RAW_REPO_URL}/defaults/initializers/simple_form.rb", "config/initializers/simple_form.rb"
+generate "simple_form:install --bootstrap"
+
+# remove_file "config/initializers/simple_form.rb"
+# get "#{RAW_REPO_URL}/defaults/initializers/simple_form.rb", "config/initializers/simple_form.rb"
 
 generate "rspec:install"
 generate "kaminari:config"
@@ -189,10 +163,6 @@ git :commit => "-am 'Initial commit'"
 
 docs = <<-DOCS
 Run the following commands to complete the setup of #{app_name.humanize}:
-
-== Airbrake
-% rails g airbrake --api-key YOUR_API_KEY
-% git ci --amend
 
 == MySQL
 CREATE SCHEMA #{app_name}_development CHARACTER SET utf8 COLLATE utf8_general_ci;
