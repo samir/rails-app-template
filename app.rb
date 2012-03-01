@@ -1,7 +1,7 @@
 use_edge_files = false
 use_edge_files = true if yes?("Would you want to get remote files by last commit?")
 if use_edge_files
-  RAW_REPO_URL = "https://raw.github.com/samir/rails-app-template/master"
+ RAW_REPO_URL = "https://raw.github.com/samir/rails-app-template/master"
 else
   RAW_REPO_URL = '/Users/samirbraga/Sites/github/rails-app-template'
 end
@@ -31,6 +31,7 @@ gem "permalink"
 gem "simple_form"
 gem "swiss_knife"
 gem "bourbon"
+gem "responders"
 gem "devise" if use_devise
 
 gem "capybara",             :group => :test
@@ -79,15 +80,13 @@ else
   get "#{RAW_REPO_URL}/defaults/config/locales/default.pt-BR.yml", "config/locales/default.pt-BR.yml"
 end
 
-run "mkdir -p vendor/assets/javascripts"
+run "mkdir -p vendor/assets"
 
+get "#{RAW_REPO_URL}/defaults/vendors/assets/*", "vendor/assets"
 
 if use_edge_files
   get "https://raw.github.com/jzaefferer/jquery-validation/master/jquery.validate.js", "vendor/assets/javascripts/jquery.validate.js"
   get "https://github.com/fnando/dispatcher-js/raw/master/dispatcher.js",              "vendor/assets/javascripts/dispatcher.js"
-else
-  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/jquery.validate.js",        "vendor/assets/javascripts/jquery.validate.js"
-  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/dispatcher.js",             "vendor/assets/javascripts/dispatcher.js"
 end
 
 # Twitter Bootstrap
@@ -102,30 +101,31 @@ if use_edge_files
   get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-scrollspy.js", "vendor/assets/javascripts/bootstrap-scrollspy.js"
   get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-tabs.js",      "vendor/assets/javascripts/bootstrap-tabs.js"
   get "https://raw.github.com/twitter/bootstrap/master/js/bootstrap-twipsy.js",    "vendor/assets/javascripts/bootstrap-twipsy.js"
-else
-  get "#{RAW_REPO_URL}/defaults/vendors/assets/stylesheets/bootstrap.css",          "vendor/assets/stylesheets/bootstrap.css"
-  get "#{RAW_REPO_URL}/defaults/vendors/assets/stylesheets/bootstrap.min.css",      "vendor/assets/stylesheets/bootstrap.min.css"
-  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/bootstrap-alerts.js",    "vendor/assets/javascripts/bootstrap-alerts.js"
-  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/bootstrap-buttons.js",   "vendor/assets/javascripts/bootstrap-buttons.js"
-  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/bootstrap-dropdown.js",  "vendor/assets/javascripts/bootstrap-dropdown.js"
-  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/bootstrap-modal.js",     "vendor/assets/javascripts/bootstrap-modal.js"
-  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/bootstrap-popover.js",   "vendor/assets/javascripts/bootstrap-popover.js"
-  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/bootstrap-scrollspy.js", "vendor/assets/javascripts/bootstrap-scrollspy.js"
-  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/bootstrap-tabs.js",      "vendor/assets/javascripts/bootstrap-tabs.js"
-  get "#{RAW_REPO_URL}/defaults/vendors/assets/javascripts/bootstrap-twipsy.js",    "vendor/assets/javascripts/bootstrap-twipsy.js"
 end
 
-
-get "#{RAW_REPO_URL}/defaults/assets/javascripts/jquery.maskedinput.js",         "vendor/assets/javascripts/jquery.maskedinput.js"
-get "#{RAW_REPO_URL}/defaults/assets/javascripts/jquery.maskedinput.min.js",     "vendor/assets/javascripts/jquery.maskedinput.min.js"
-get "#{RAW_REPO_URL}/defaults/assets/javascripts/jquery.ui.datepicker-pt-BR.js", "vendor/assets/javascripts/jquery.ui.datepicker-pt-BR.js"
-get "#{RAW_REPO_URL}/defaults/assets/javascripts/selectivizr-min.js",            "vendor/assets/javascripts/selectivizr-min.js"
-get "#{RAW_REPO_URL}/defaults/assets/javascripts/selectivizr.js",                "vendor/assets/javascripts/selectivizr.js"
-
-get "#{RAW_REPO_URL}/defaults/assets/stylesheets/application.css.sass.erb",      "app/assets/stylesheets/application.css.sass.erb"
-get "#{RAW_REPO_URL}/defaults/assets/stylesheets/base.css.sass.erb",             "app/assets/stylesheets/base.css.sass.erb"
-get "#{RAW_REPO_URL}/defaults/assets/stylesheets/icons.css.sass.erb",            "app/assets/stylesheets/icons.css.sass.erb"
-get "#{RAW_REPO_URL}/defaults/assets/stylesheets/simple_form.css.sass.erb",      "app/assets/stylesheets/simple_form.css.sass.erb"
+# get "#{RAW_REPO_URL}/defaults/assets/javascripts/plugin/mutiselect/ui.multiselect.js",       "vendor/assets/javascripts/plugin/mutiselect/ui.multiselect.js"
+# get "#{RAW_REPO_URL}/defaults/assets/javascripts/plugin/mutiselect/ui.multiselect-pt-BR.js", "vendor/assets/javascripts/plugin/mutiselect/ui.multiselect-pt-BR.js"
+#
+# get "#{RAW_REPO_URL}/defaults/assets/javascripts/plugin/maskedinput/jquery.maskedinput.js",     "vendor/assets/javascripts/plugin/maskedinput/jquery.maskedinput.js"
+# get "#{RAW_REPO_URL}/defaults/assets/javascripts/plugin/maskedinput/jquery.maskedinput.min.js", "vendor/assets/javascripts/plugin/maskedinput/jquery.maskedinput.min.js"
+#
+# get "#{RAW_REPO_URL}/defaults/assets/javascripts/jquery.ui.js",                  "vendor/assets/javascripts/jquery.ui.js"
+# get "#{RAW_REPO_URL}/defaults/assets/javascripts/jquery.ui.datepicker-pt-BR.js", "vendor/assets/javascripts/jquery.ui.datepicker-pt-BR.js"
+#
+# # http://trentrichardson.com/examples/timepicker/
+# get "#{RAW_REPO_URL}/defaults/assets/javascripts/jquery.ui.timepicker-addon.js", "vendor/assets/javascripts/jquery.ui.timepicker-addon.js"
+# get "#{RAW_REPO_URL}/defaults/assets/javascripts/jquery.ui.timepicker-pt-BR.js", "vendor/assets/javascripts/jquery.ui.timepicker-pt-BR.js"
+#
+# get "#{RAW_REPO_URL}/defaults/assets/javascripts/selectivizr-min.js",            "vendor/assets/javascripts/selectivizr-min.js"
+# get "#{RAW_REPO_URL}/defaults/assets/javascripts/selectivizr.js",                "vendor/assets/javascripts/selectivizr.js"
+#
+# get "#{RAW_REPO_URL}/defaults/vendors/assets/stylesheets/ui/timepicker.css",     "vendor/assets/stylesheets/ui/timepicker.css"
+# get "#{RAW_REPO_URL}/defaults/vendors/assets/stylesheets/ui/multiselect.css",     "vendor/assets/stylesheets/ui/multiselect.css"
+#
+# get "#{RAW_REPO_URL}/defaults/assets/stylesheets/application.css.sass.erb",      "app/assets/stylesheets/application.css.sass.erb"
+# get "#{RAW_REPO_URL}/defaults/assets/stylesheets/base.css.sass.erb",             "app/assets/stylesheets/base.css.sass.erb"
+# get "#{RAW_REPO_URL}/defaults/assets/stylesheets/icons.css.sass.erb",            "app/assets/stylesheets/icons.css.sass.erb"
+# get "#{RAW_REPO_URL}/defaults/assets/stylesheets/simple_form.css.sass.erb",      "app/assets/stylesheets/simple_form.css.sass.erb"
 
 activerecord_rescue = <<-ACTIVERECORD
   rescue_from "ActiveRecord::RecordNotFound" do |e|
@@ -138,7 +138,11 @@ protect_from_forgery
 #{activerecord_rescue}
 APPLICATION_CONTROLLER
 
-# Initializers
+# Config and Initializers
+
+get "#{RAW_REPO_URL}/defaults/config/database.yml",         "config/databse.yml"
+gsub_file "config/databse.yml", "APP_NAME", app_name
+
 get "#{RAW_REPO_URL}/defaults/initializers/haml.rb",        "config/initializers/haml.rb"
 
 remove_file "app/views/layouts/application.html.erb"
@@ -168,15 +172,34 @@ if use_devise
 end
 run "rake i18n:js:setup"
 
-# if use_devise
-#   gsub_file "spec/spec_helper.rb", "config.use_transactional_fixtures = true", <<-SPEC_HELPER
-#   config.use_transactional_fixtures = true
-#
-#     config.include Sorcery::TestHelpers::Rails, :type => :controllers
-#   SPEC_HELPER
-# end
+if use_devise
+  gsub_file "spec/spec_helper.rb", "config.use_transactional_fixtures = true", <<-SPEC_HELPER
+  config.use_transactional_fixtures = true
+    config.include Devise::TestHelpers, :type => :controller
+    config.extend ControllerMacros, :type => :controller
+
+  SPEC_HELPER
+end
 
 
 git :init
 git :add => "."
 git :commit => "-am 'Initial commit'"
+
+
+docs = <<-DOCS
+Run the following commands to complete the setup of #{app_name.humanize}:
+
+== Airbrake
+% rails g airbrake --api-key YOUR_API_KEY
+% git ci --amend
+
+== MySQL
+CREATE SCHEMA #{app_name}_development CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE SCHEMA #{app_name}_test CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE SCHEMA #{app_name}_production CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE SCHEMA #{app_name}_staging CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+DOCS
+
+log docs
